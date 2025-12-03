@@ -1,13 +1,10 @@
 import boto3
-import json
-
-dynamodb = boto3.resource("dynamodb")
-table = dynamodb.Table("Inventory")
+dynamodb = boto3.resource('dynamodb')
+table = dynamodb.Table('Inventory')
 
 def lambda_handler(event, context):
     response = table.scan()
-
     return {
         "statusCode": 200,
-        "body": json.dumps(response["Items"])
+        "body": response.get("Items", [])
     }
